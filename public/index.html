@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html lang="en">
+	<head>
+		<!-- META -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>BANK</title>
+		<script src="https://cdn.staticfile.org/angular.js/1.7.0/angular.min.js"></script><!-- 引入angular -->
+		<link rel="stylesheet" type="text/css" href="index.css"><!-- 引入CSS文件 -->
+	</head>
+	<!-- SET THE CONTROLLER -->
+	<body>
+		<div ng-app="bankApp" ng-controller="mainController">
+			<!-- 角色选择部分 -->
+			<div class="role">
+				请选择角色：
+				<button class="roleBtn" ng-click="chooseTarco()">Tarco</button>
+				<button class="roleBtn" ng-click="chooseEleven()">Eleven</button>
+				<button class="roleBtn" ng-click="chooseAdmin()">Administrator</button>
+			</div>
+			<!-- 以下是用户页 -->
+			<div ng-hide="!isUser">
+				<div class="top">
+					<div class="top-left">
+						<p align="center">欢迎回来，{{name}}！</p>
+						<p style="font-size: 20px;" align="center">账户：{{account}}</p>
+					</div>
+					<div class="top-right">
+						<div style="height: 100%; width: 50%; float: left;">
+							<div style="padding: 10px;"></div>
+							<div class="top-right-words">
+								<div style="font-size: 16px;" align="right">
+									我的总资产
+								</div>
+								<div style="font: bold 32px '黑体';" align="right">
+									￥{{totalMoney}}
+								</div>
+							</div>
+						</div>
+						<div class="top-right-btns">
+							<div style="padding-top: 10px;">
+								<div style="padding: 10px" ng-controller="postSavMonCtrller" >
+									<form>
+					    				存款：
+					    				<input type="text" name="save" ng-model="saveMoney" />
+					    				<button class="confirm" ng-click="postSavedMoney">确定</button>
+ 					    			    <br />
+					    				<div style="font-size: 12px; margin-right: 60px;" align="center">
+					    					<!-- 这里可以直接用saveType变量读取到是定期还是活期 -->
+					    					<input type="radio" name="chooseType" ng-checked="true" ng-value="fixed" ng-model="saveType"/>定期
+					    					<input type="radio" name="chooseType" ng-value="flexible" ng-model="saveType"/>活期
+					    				</div>
+					    			</form>
+					    		</div>
+					    		<div style="padding: 10px; padding-top: 1px;" ng-controller="postWitMonCtrller">
+					    			<form>
+					    				取款：
+					    				<input type="text" name="withdraw" ng-model="withdrawMoney" />
+					    				<button class="confirm" ng-click="postWithdrawnMoney">确定</button>
+					    			</form>
+				    			</div>
+				    			<div style="padding: 10px" ng-controller="postTranMonCtrller">
+					    			<form>
+					    				转账：
+					    				<input type="text" name="transfer" ng-model="transferMoney">
+					    				<button class="confirm" ng-click="postTransferedMoney">确定</button>
+					    			</form>
+					    		</div>
+			    			</div>
+						</div>
+					</div>
+				</div>
+				<div class="mainBody">
+					<div style="padding: 8px"></div>
+					<div class="bar">
+						资产详情
+					</div>
+					<div class="bar" style="height: 180px;" align="center">
+						<table>
+							<tr><th>类型</th><th>本金</th><th>余额</th></tr>
+							<tr><td>定期存款/元</td><td>{{fixedPrincipal}}</td><td>{{fixedMoney}}</td></tr>
+							<tr><td>活期存款/元</td><td>{{flexiblePrincipal}}</td><td>{{flexibleMoney}}</td></tr>
+							<tr><td>理财收益/元</td><td>{{extraPrincipal}}</td><td>{{extraProfit}}</td></tr>
+							<tr><td>总资产/元</td><td>{{totalPrincipal}}</td><td>{{totalMoney}}</td></tr>
+						</table>
+						<div style="font-size: 12px; padding-top: 6px;">注：定期存款利率按存款时间进行划分：三个月年利率为1.5%；半年年利率为1.8%；一年年利率为2.3%；两年年利率为2.9%；三年年利率为3.6%，且在到达存款时间之前无法取出这类存款；活期存款的利率相对比较低：年利率0.6%，但是可以随时取出，其分发利润的要求是利润超过1块钱。</div>
+					</div>
+					<div class="mainBody-bottom">
+						<div style="width:48%; float: left;">
+							<div class="bar" style="width: 100%; margin-top: 20px;">
+								交易记录
+							</div>
+							<div class="bar" style="width:100%; height: 180px">
+								<!-- <table ng-repeat="r in records"> -->
+								<table>
+									<tr><th>时间</th><th>活动</th><th>金额</th></tr>
+									<!-- <tr><th>{{r.time}}</th><th>{{r.activity}}</th><th>{{r.money}}</th></tr> -->
+									<tr><td>20190523</td><td>存入</td><td>233</td></tr>
+									<tr><td>20190523</td><td>取出</td><td>666</td></tr>
+									<tr><td>20190523</td><td>转账</td><td>555</td></tr>
+									<tr><td></td><td></td><td></td></tr>
+									<tr><td></td><td></td><td></td></tr>
+								</table>
+							</div>
+						</div>
+						<div style="width:48%; float: right">
+							<div class="bar" style="width: 100%;margin-top: 20px;">
+								理财产品
+							</div>
+							<div class="bar" style="width:100%; height: 180px">
+								<div style="width: 50%; height: 100%;">
+									<div class="product" align="center">
+										<p class="product-words1">30天定期</p>
+										<p class="product-words2">3.2920%</p>
+										<div style="padding: 10px;" ng-controller="buyProductCtrller" >
+											<button class="product-btn" ng-click="buyProduct">
+												购买
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 以下是管理员页 -->
+			<div class="ad-mainBody" ng-hide="isUser" ng-controller="infoDetailCtrller">
+				<div class="ad-bodyLeft">
+					<div class="ad-userAccount">
+						<!-- <table ng-repeat="r in records"> -->
+						<table>
+							<tr><td>用户名</td><td>总资产</td></tr>
+							<!-- 循环渲染时，getDetail()这个函数的实现可能会比较难，需要知道点击的是哪一行，然后再对应从数据库读取详细信息 -->
+							<!-- <tr>
+								<td><button class="changeUser" ng-click="getDetail()">{{r.name}}</button></td>
+								<td>{{r.totalMoney}}</td>
+							</tr> -->
+							<tr>
+								<td><button class="changeUser" ng-click="getTarcoDetail()">Tarco</button></td>
+								<td>25000</td>
+							</tr>
+							<tr>
+								<td><button class="changeUser" ng-click="getElevenDetail()">Eleven</button></td>
+								<td>60000</td>
+							</tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+							<tr><td></td><td></td></tr>
+						</table>
+					</div>
+				</div>
+				<div class="ad-bodyRight">
+					<div class="ad-accountDetail-title">
+						详细信息
+					</div>
+					<div class="ad-accountDetail-body">
+						<p style="text-align: left; padding-left: 2.4em;">用户名字：{{name}}</p>
+						<p style="text-align: left; padding-left: 2.3em;">银行账号：{{account}}</p>
+						<p style="padding-right: 7em;">资产详情</p>
+						<p style="text-align: left; padding-left: 3em;">定期存款：￥{{fixedMoney}}</p>
+						<p style="text-align: left; padding-left: 3em;">活期存款：￥{{flexibleMoney}}</p>
+						<p style="text-align: left; padding-left: 3em;">理财收益：￥{{profit}}</p>
+						<p style="text-align: left; padding-left: 3em;">总资产：￥{{totalMoney}}</p>
+					</div>
+				</div>
+			</div>
+			<!-- angular实现一些数据的动态变化 -->
+			<script type="text/javascript">
+				var app = angular.module('bankApp', []);
+				app.controller('mainController', function($scope) {
+					//默认显示Tarco的数据，先从数据库读出Tarco的数据
+					$scope.name = "Tarco";
+					$scope.account = "2019052123333";
+				  	$scope.isUser = true;
+				  	//点击Tarco的按钮时，从数据库读取Tarco的数据
+	    			$scope.chooseTarco = function() {
+	    				$scope.isUser = true;
+	    				$scope.name = 'Tarco';
+	    				$scope.account = "2019052123333";
+	    			};
+	    			//点击Eleven的按钮时，从数据库读取Eleven的数据
+	    			$scope.chooseEleven = function() {
+	    				$scope.isUser = true;
+	    				$scope.name = 'Eleven';
+	    				$scope.account = "2222222222222";
+	    			};
+	    			// 点击Adminstrator的按钮时，从数据库中读取Tarco数据，然后条件渲染出管理员页面
+	    			$scope.chooseAdmin = function() {
+	    				$scope.isUser = false;
+	    			};
+				});
+				app.controller("postSavMonCtrller", function($scope){
+
+				});
+				app.controller("postWitMonCtrller", function($scope){
+
+				});
+				app.controller("postTranMonCtrller", function($scope){
+
+				});
+				app.controller("buyProductCtrller", function($scope){
+
+				});
+				app.controller("infoDetailCtrller", function($scope){
+					$scope.getTarcoDetail = function(){
+	    				$scope.name = 'Tarco';
+	    				$scope.account = "2019052123333";
+	    			}
+	    			$scope.getElevenDetail = function(){
+	    				$scope.name = 'Eleven';
+	    				$scope.account = "2222222222222";
+	    			}
+				});
+			</script>
+		</div>
+	</body>
+</html>

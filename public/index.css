@@ -1,0 +1,152 @@
+/*用户部分的样式*/
+.role{
+	font:'幼圆';
+	height: 25px;
+}
+.roleBtn{
+	color: black;
+	background-color: white;
+	border: 1px solid black;
+}
+.top{
+	background-color: #33CCFF;
+	height: 150px;
+	margin: 0 auto;
+	color: white;
+}
+.top-left{
+	height: 100%; 
+	width: 50%; 
+	float: left; 
+	font: 28px '幼圆';
+	}
+.top-right{
+	height: 100%; 
+	width: 50%; 
+	float: right; 
+	font: 24px '幼圆';
+}
+.top-right-words{
+	height: 50%; 
+	padding: 24px 10px 20px 5px; 
+	border-right: 1px solid white;
+}
+.top-right-btns{
+	height: 100%; 
+	width: 50%; 
+	float: right; 
+	font-size: 16px
+}
+.mainBody{
+	background-color: #F0F8FF;
+	height: 500px;
+	margin: 0 auto;
+}
+.bar{
+	background-color: white;
+	width: 65%;
+	height: 20px;
+	font:16px '幼圆';
+	border: 1px solid grey;
+	padding: 2px;
+	margin: 0 auto;
+}
+.confirm{
+	color: #33CCFF;
+	background-color: white;
+	border: 1px solid black;
+}
+.mainBody-bottom{
+	width: 65%; 
+	height: 50%; 
+	margin: 0 auto
+}
+table{
+	width: 100%;
+	text-align: center;
+	border: 1px solid;
+	border-collapse: collapse;
+}
+th, td{
+	height: 26px;
+	border: 1px solid;
+	border-collapse: collapse;
+}
+.product{
+	width:50%; 
+	border: 1px solid; 
+	margin-top: 42px; 
+	margin-left: 10px; 
+	padding: 2px;
+}
+.product-words1{
+	font: bold 16px '仿宋'; 
+	margin: 0px; 
+	margin-top: 3px
+}
+.product-words2{
+	font: bold 22px '仿宋'; 
+	color: red; 
+	margin: 0px;
+}
+.product-btn{
+	background-color: #33CCFF; 
+	color: white; 
+	font: 16px '幼圆';
+	border: 1px solid black;
+}
+
+
+/*管理员部分的样式*/
+.ad-mainBody{
+	background-color: #33CCFF;
+	height: 535px;
+	margin: 0 auto;
+}
+.ad-bodyLeft{
+	width: 60%;
+	height: 100%;
+	float: left;
+}
+.ad-bodyRight{
+	width: 40%;
+	height: 100%;
+	float: right;
+}
+.ad-userAccount{
+	height: 90%;
+	margin-left: 150px;
+	margin-top: 32px;
+	margin-right: 68px;
+	background-color: white;
+	border: 1px solid;
+	padding: 4px;
+}
+.ad-accountDetail-title{
+	height: 6%;
+	width: 62%;
+	margin-left: 20px;
+	margin-top: 32px;
+	margin-right: 68px;
+	background-color: white;
+	border: 1px solid;
+	padding-top: 6px;
+	text-align: center;
+	font:20px '幼圆';
+}
+.ad-accountDetail-body{
+	height: 81.5%;
+	width: 62%;
+	margin-left: 20px;
+	margin-top: 0px;
+	margin-right: 68px;
+	background-color: white;
+	border: 1px solid;
+	padding-top: 6px;
+	text-align: center;
+	font:20px '幼圆';
+}
+.changeUser{
+	background-color: white;
+	border: none;
+}
